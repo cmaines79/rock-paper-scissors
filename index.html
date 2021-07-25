@@ -4,12 +4,74 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <!-- <script src="script.js"></script> -->
 
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    
+    <!-- Header -->
+    <header class="head container">
+        <h1>Rock Paper Scissors</h1>
+    </header>
+
+    <!-- instructions -->
+    <section class="pick container">
+        <h2>You pick... Rock, Paper, or Scissors</h2>
+    </section>
+
+    <!-- rock, paper scissor buttons -->
+    <section class="rps container">
+        <button id="rock" class="btn">
+
+        </button>
+        <button id="paper" class="btn">
+
+        </button>
+        <button id="scissors" class="btn">
+
+        </button>
+    </section>
+
+    <!-- player and computer choices -->
+    <section class="choices container">
+        <div class="playDiv">
+            <h3>Player:</h3>
+            <h3 class="playerChoice">?</h3>
+        </div>
+        <div class="playDiv">
+            <h3>Computer:</h3>
+            <h3 class="computerChoice">?</h3>
+        </div>
+    </section>
+
+    <!-- winner section -->
+    <section class="winner">
+        <div class="playDiv decision">
+            <h3 class="roundWinner">?</h3>
+        </div>
+    </section>
+
+    <!-- score keeping -->
+    <section class="score container">
+        <div>
+            <h3>Score:</h3>
+        </div>
+        <div class="scoreDiv">
+            <h4>Player:</h4>
+            <h4 class="playerScore">0</h4>
+            <h4>Computer:</h4>
+            <h4 class="computerScore">0</h4>
+        </div>
+    </section>
+
+    <!-- play again? -->
+    <section class="playAgain container">
+        <button id="playAnother">Play Again!</button>
+    </section>
+    <script src="script.js"></script>
 </body>
 </html>
