@@ -3,11 +3,26 @@
 // Created by Cordell Maines - MainesIndustries@gmail.com 
 // Created 7/24/2021
 
+// Global DOM Variables
+const picked = document.querySelector('.playerChoice');
+const compChoice = document.querySelector(".computerChoice");
+const win = document.querySelector('.roundWinner');
+const cScore = document.querySelector('.computerScore');
+const pScore = document.querySelector('.playerScore');
+const ultimateWinner = document.querySelector('.ultimateWinner');
+const playAgain = document.querySelector('.playAgain');
+const score = document.querySelector('.score');
+const choiceSection = document.querySelector('.choices');
+const winnerSection = document.querySelector('.winner');
+
+// Global variables
+let games = 5;
+let roundCount = 0;
+let computerScore = 0;
+let playerScore = 0;
+
 // Computer is picking either Rock, Paper or Scissors
 function computerPlay(){
-    // DOM variables
-    const compChoice = document.querySelector(".computerChoice");
-
     // use math to pick a random number from 1-3 to determine if the computer picks Rock, Paper, or Scissors
     let choice = Math.floor(Math.random() * 3);
 
@@ -39,6 +54,9 @@ function resetRound() {
 
 // playng each round
 function playRound(player, computer){
+    // setting to visible for gameplay
+    win.style.visibility = 'visible';
+
     //Logic for who wins & assign the value to the 'winner section'
     if(player == computer){
         win.innerText = "It's a Tie, Play Again";
@@ -84,56 +102,84 @@ function playRound(player, computer){
     }
 }
 
-// starting playRound based pon event listeners (click on rock, paper, or scissors)
+function keepScore(decision){
+
+    //score keeping
+    let winner = decision.charAt(4);
+
+    if (roundCount < 5);
+        if(winner == "W"){
+            playerScore += 1;
+            pScore.innerText = playerScore;
+            roundCount += 1;
+        } else {
+            computerScore += 1;
+            cScore.innerText = computerScore;
+            roundCount += 1;
+        }
+
+        // making the score box visible
+        score.style.visibility = 'visible';
+}
+
+// ----- MAIN GAME PLAY STARTS HERE -----
+// starting playRound based upon event listeners for all buttons within the .rps div (click on rock, paper, or scissors)
 const buttonListener = document.querySelector('.rps').addEventListener('click', function(e){
+    
     // checking to see if click was on a button or not
     const isButton = e.target.nodeName === 'BUTTON';
     if (isButton) {
-        // clean up game board
-        resetRound();
+        
+        // if logic to play each round
+        if (roundCount < games){
 
-        // assign validated string value to player's choice
-        const playerChoice = validatePlayerChoice(e.target.id);
+            // clean up game board
+            resetRound();
 
-        // show player pick on game board
-        picked.innerText = playerChoice;
+            // assign validated string value to player's choice
+            const playerChoice = validatePlayerChoice(e.target.id);
 
-        // call playround
-        // keep score
-        // stop at 5 rounds
+            // show player pick on game board
+            picked.innerText = playerChoice;
+
+            // get computer's Play and show on game board
+            const computerChoice = computerPlay();
+
+            // call playRound() to see who the winner is.
+            const decision = playRound(playerChoice, computerChoice);
+            console.log(decision);
+
+            // Score Keeping
+            keepScore(decision);
+        } 
+        
+        // is the game over and do we need to display the ultimate winner?
+        if (roundCount == games){
+            // make ultimateWinner visible
+            ultimateWinner.style.visibility = 'visible';
+
+            // remove .choice and .winner sections when the game play is complete
+            choiceSection.remove();
+            winnerSection.remove();
+
+
+            // who won overall
+            if(playerScore == computerScore){
+                ultimateWinner.innerText = "It's a Tie Game Overall";
+            } else if(playerScore > computerScore){
+                ultimateWinner.innerText = "Player Wins Overall";
+            } else {
+                ultimateWinner.innerText = "Computer Wins Overall";
+            }
+
+            // game over, would you like to play again?
+            playAgain.style.visibility = 'visible';
+            playAgain.addEventListener('click', (e) => {
+                location.reload();
+            });
+        }
 
     } else {
         return;
     }
 });
-
-
-
-// ----- MAIN GAME PLAY STARTS HERE -----
-// DOM Variables 
-const picked = document.querySelector('.playerChoice');
-const compChoice = document.querySelector(".computerChoice");
-const win = document.querySelector('.roundWinner');
-const playAgain = document.querySelector('.playAgain');
-const score = document.querySelector('.score');
-
-// variables
-let compPick = "";
-let winner = "";
-gameCount = 0;
-
-
-//eventListeners waiting for the player to pick his play
-// const pickRock = document.getElementById('rock').addEventListener('click', function() {
-//     // clean up game board
-//     resetRound();
-
-//     // show player pick on game board
-//     picked.innerText = "Rock";
-    
-//     // calling game() with a delay of 1/2 second
-//     compPick = computerPlay(); // NEED TO ADD DELAY
-//     roundWinner = playRound("Rock", compPick);
-//     gameCount += 1;
-//     scoreKeeping(roundWinner, gameCount);
-// });
